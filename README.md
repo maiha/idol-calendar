@@ -11,8 +11,8 @@
     (edit config/database.rb with your envs)
     $ bundle exec padrino rake sq:migrate:auto
 
-    $ cp db/seeds.rb.sample db/seeds.rb
-    (edit db/seeds.rb with your favorite calendars)
+    $ cp db/cals.tsv.sample db/cals.tsv
+    (edit db/cals.tsv with your favorite calendars)
     $ bundle exec padrino rake seed
     $ foreman start
 
