@@ -3,7 +3,16 @@
     $ git clone git://github.com/sugyan/idol-calendar.git
     $ cd idol-calendar
     $ bundle install --path vendor/gems
+
+    $ cp config/apps.rb.sample config/apps.rb
+    (edit config/apps.rb with your envs)
+
+    $ cp config/database.rb.sample config/database.rb
+    (edit config/database.rb with your envs)
     $ bundle exec padrino rake sq:migrate:auto
+
+    $ cp db/seeds.rb.sample db/seeds.rb
+    (edit db/seeds.rb with your favorite calendars)
     $ bundle exec padrino rake seed
     $ foreman start
 

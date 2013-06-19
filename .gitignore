@@ -7,3 +7,6 @@ vendor/gems/*
 .sass-cache/*
 .bundle/
 .env
+config/database.rb
+db/seeds.rb
+config/apps.rb
