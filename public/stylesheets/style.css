@@ -2,6 +2,26 @@ body {
     padding-top: 40px;
 }
 
+.navbar a.brand {
+    font-weight: bold;
+    color: black;
+}
+
+ul.events span.sun {
+    color: red;
+}
+
+ul.events span.sat {
+    color: blue;
+}
+
+ul.events span.tag {
+    color: #222;
+    background-color: #ddd;
+    border-color: #ddd;
+    font: 11px arial,sans-serif;
+}
+
 ul.events span.summary {
     padding: 0 5px;
 }
