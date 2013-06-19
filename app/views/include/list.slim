@@ -5,8 +5,9 @@ ul.unstyled.events
     p.text-warning イベント情報がありません
 
   - @events.each do |event|
-    - wdays = %w(日 月 火 水 木 金 土)
-    - ws = wdays[event.start.wday]
+    - wdays  = %w( 日  月  火  水  木  金  土  )
+    - wabbrs = %w( sun mon tue wed thu fri sat )
+    - ws = "<span class=%s>%s</span>" % [wabbrs[event.start.wday], wdays[event.start.wday]]
     - we = wdays[event.end.wday]
     - if event.start >= DateTime.now
       - unless line.nil? || line
@@ -17,11 +18,14 @@ ul.unstyled.events
     li
       - if (event.start.hour || event.start.minute).zero?
         - if event.end - event.start > 1
-          = sprintf("%s - %s", event.start.strftime("%-m/%-d(#{ws})"), event.end.strftime("%-m/%-d(#{we})"))
+          == sprintf("%s - %s", event.start.strftime("%-m/%-d(#{ws})"), event.end.strftime("%-m/%-d(#{we})"))
         - else
-          = event.start.strftime("%-m/%-d(#{ws})")
+          == event.start.strftime("%-m/%-d(#{ws})")
       - else
-        = event.start.strftime("%-m/%-d(#{ws}) %H:%M")
+        == event.start.strftime("%-m/%-d(#{ws}) %H:%M")
+      - if @tag and @tag.all?
+        - event.labels.each do |name|
+          span.tag = name
       span.summary == link_to event.summary, url_for(:event, :id => event.id)
       span.location = event.location
 == slim :'include/pager', :layout => false, :locals => { :data => @events }

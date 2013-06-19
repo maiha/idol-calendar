@@ -16,6 +16,7 @@ task :crawling do
   today = Date.today.to_datetime
   Calendar.each do |calendar|
     log.info(calendar.cid)
+    label = calendar.tags.map(&:name).sort.join("|")
     data = client.execute(
       :api_method => client.discovered_api('calendar', 'v3').calendars.get,
       :parameters => { 'calendarId' => calendar.cid },
@@ -23,6 +24,7 @@ task :crawling do
     calendar.update(
       :summary     => data.summary,
       :description => data.description,
+      :label       => label,
     )
     # get events
     client.execute(
@@ -40,15 +42,16 @@ task :crawling do
       start_datetime = item.start.date_time || item.start.date
       end_datetime   = item.end.date_time   || item.end.date
       Event.find_or_create(:id => item.id).update(
-        :calendar_id => calendar.id,
-        :created     => item.created,
-        :updated     => item.updated,
-        :summary     => item.summary,
-        :description => item.description,
-        :location    => item.location,
-        :htmlLink    => item.htmlLink,
-        :start       => start_datetime,
-        :end         => end_datetime,
+        :calendar_id  => calendar.id,
+        :created      => item.created,
+        :updated      => item.updated,
+        :summary      => item.summary,
+        :description  => item.description,
+        :location     => item.location,
+        :htmlLink     => item.htmlLink,
+        :start        => start_datetime,
+        :end          => end_datetime,
+        :label        => label,
         :last_updated => DateTime.now,
       )
       log.info('%s: %s' % [item.id, item.summary[0 .. 31]])
