@@ -12,16 +12,9 @@ tsv.readlines.each_with_index do |line, i|
     when /^#/    ; # Skip comments
     when /^\s*$/ ; # Skip blank lines
     when /(\S+)\s+(\S.*)/
-      cid    = $1
-      labels = $2.sub(/#.*$/, '').split('|').map(&:strip)
-      raise "no tags found" if labels.blank?
-
-      cal = Calendar.find_or_create(:cid => cid)
-      cal.remove_all_tags
-
-      labels.map{|name| Tag.find_or_create(:name => name)}.each do |tag|
-        cal.add_tag(tag)
-      end
+      cid   = $1
+      label = $2.sub(/#.*$/, '')
+      Calendar.register(cid, label)
     else
       raise "invalid data"
     end
