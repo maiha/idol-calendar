@@ -1,5 +1,9 @@
 ul.unstyled.events
   - line = nil
+
+  - if @events.blank?
+    p.text-warning イベント情報がありません
+
   - @events.each do |event|
     - wdays = %w(日 月 火 水 木 金 土)
     - ws = wdays[event.start.wday]

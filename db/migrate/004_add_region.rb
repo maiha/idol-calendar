@@ -1,7 +1,5 @@
 Sequel.migration do
   change do
-    alter_table :calendars do
-      add_column :area, String
-    end
+    # NOP
   end
 end

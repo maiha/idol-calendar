@@ -8,5 +8,5 @@ vendor/gems/*
 .bundle/
 .env
 config/database.rb
-db/seeds.rb
 config/apps.rb
+db/cals.tsv
