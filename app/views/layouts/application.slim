@@ -3,7 +3,7 @@ html
   head
     meta charset="UTF-8"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
-    title idol-calendar
+    title == h(settings.title)
     link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.min.css" media="screen"
     link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-responsive.min.css"
     == stylesheet_link_tag :style
@@ -15,7 +15,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          == link_to 'idol-calendar', '/', :class => 'brand'
+          == link_to h(settings.title), '/', :class => 'brand'
           .nav-collapse.collapse.navbar-responsive-collapse
             ul.nav
               li == link_to '北海道', url_for(:area, :area => :hokkaido)
