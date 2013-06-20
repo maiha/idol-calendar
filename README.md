@@ -10,6 +10,7 @@
     $ cp config/database.rb.sample config/database.rb
     (edit config/database.rb with your envs)
     $ bundle exec padrino rake sq:migrate:auto
+    (if you got an error, run it again)
 
     $ cp db/cals.tsv.sample db/cals.tsv
     (edit db/cals.tsv with your favorite calendars)
