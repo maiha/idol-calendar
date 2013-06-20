@@ -18,3 +18,7 @@ def app(app = nil &blk)
   @app ||= block_given? ? app.instance_eval(&blk) : app
   @app ||= Padrino.application
 end
+
+def load_fixture(file)
+  Pathname(Padrino.root("spec/fixtures", file)).read{}
+end
