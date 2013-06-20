@@ -9,6 +9,7 @@ gem 'sinatra-flash', :require => 'sinatra/flash'
 
 gem 'google-api-client'
 gem 'tzinfo'
+gem 'tzinfo-data'
 
 # Component requirements
 gem 'slim'
