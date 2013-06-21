@@ -10,3 +10,4 @@ vendor/gems/*
 config/database.rb
 config/apps.rb
 db/cals.tsv
+log/

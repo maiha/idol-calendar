@@ -18,30 +18,13 @@ describe Extractors::Natokan  do
     its(:start) { should == Time.local(2013,6,21,16,30).to_datetime }
 
     # titleの抽出
-    its(:label) { should == "池袋サンシャインシティ" }
+    its(:summary) { should == "池袋サンシャインシティ" }
 
     # descriptionの抽出
     its(:description) { should_not be_blank }
-  end
-end
 
-__END__
-
-      events.first.should == Event.new
-
-id           | text                        | not null
- calendar_id  | integer                     |
- created      | timestamp without time zone |
- updated      | timestamp without time zone |
- start        | timestamp without time zone |
- end          | timestamp without time zone |
- summary      | text                        |
- description  | text                        |
- location     | text                        |
- htmlLink     | text                        |
- last_updated | timestamp without time zone |
- label        | text                        |
-
+    specify "イベント情報2を抽出" do
+      events[1].start.to_s.should == "2013-06-22T17:30:00+09:00"
     end
   end
 end
