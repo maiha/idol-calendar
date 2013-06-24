@@ -15,8 +15,6 @@ task :crawling => :environment  do
 
   today = Date.today.to_datetime
   Calendar.each do |calendar|
-next unless calendar.label =~ /ナト/
-
     log.info(calendar.cid)
     label = calendar.tags.map(&:name).sort.join("|")
     data = client.execute(
@@ -35,12 +33,15 @@ next unless calendar.label =~ /ナト/
       },
     ).data.items
 
-    next if items.blank?
+    if calendar.source.blank? or items.any?
+      calendar.update(
+        :source      => 'https://www.google.com/calendar/embed?src=' + CGI.escape(calendar.cid),
+      )
+    end
 
     calendar.update(
       :summary     => data.summary,
       :description => data.description,
-      :source      => calendar.cid,
       :label       => label,
     )
 

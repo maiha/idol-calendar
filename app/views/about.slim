@@ -13,7 +13,7 @@ h4 取得対象にしているカレンダー
   ul
   - tag.calendars.each do |calendar|
     li
-      == link_to calendar.summary, calendar.source_url, :target => '_blank'
+      == link_to calendar.summary, calendar.source, :target => '_blank'
 br
 p
   | ご要望にお応えできるかどうかは分かりませんが、「このカレンダーも含めて欲しい」などありましたら
