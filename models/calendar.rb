@@ -20,4 +20,16 @@ class Calendar < Sequel::Model
 
     return cal
   end
+
+  def live_update
+    LiveUpdate.filter(:cid => cid).first
+  end
+
+  def source_url
+    case source.to_s
+    when '' ; nil
+    when cid; 'https://www.google.com/calendar/embed?src=' + CGI.escape(cid)
+    else    ; source
+    end      
+  end
 end

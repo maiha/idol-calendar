@@ -5,6 +5,7 @@ Sequel.migration do
       String :cid, :unique => true
       String :summary
       String :description
+      String :source
     end
   end
 

@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 require 'google/api_client'
 
+task :update_register => :environment  do
+  extractors = [
+                ['Extractors::Natokan', '65rbp6hqu4g5abgvpps56pllrc@group.calendar.google.com'],
+               ]
+  extractors.each do |(klass, cid)|
+    LiveUpdate.find_or_create(:cid => cid).update(:extractor_name => klass)
+  end
+end
+
 task :update_direct => :environment  do
   path = Pathname(Padrino.root("log/update_direct.log"))
   path.parent.mkpath unless path.parent.exist?
@@ -8,20 +17,17 @@ task :update_direct => :environment  do
   Sequel::Model.db.loggers = [logger]
 
   LiveUpdate.each do |lu|
-    calendar = Calendar.filter(:cid => lu.cid).first
-    unless calendar
+    calendar = Calendar.filter(:cid => lu.cid).first or
       raise "CalendarNotFound: #{cid}"
-    end
 
-    extractor = eval(lu.extractor)
-    events = extractor.execute
+    extractor = lu.extractor
+    events    = extractor.execute
 
-    if events.blank?
+    events.any? or
       raise "EventsNotFound: %s" % lu.inspect
-    end
 
     label = calendar.tags.map(&:name).sort.join("|")
-    calendar.update(:label => label)
+    calendar.update(:label => label, :summary => extractor.source, :source => extractor.source)
     calendar.events.each(&:delete)
 
     events.each_with_index do |event, i|
@@ -61,7 +67,6 @@ task :update => :environment  do
   service = client.discovered_api('calendar', 'v3')
 
   LiveUpdate.each do |lu|
-#    p eval(lu.extractor)
     cid = lu.cid
     p cid
 
