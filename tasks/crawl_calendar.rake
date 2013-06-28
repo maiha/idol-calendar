@@ -21,13 +21,8 @@ task :crawling => :environment  do
       :api_method => client.discovered_api('calendar', 'v3').calendars.get,
       :parameters => { 'calendarId' => calendar.cid },
     ).data
-    calendar.update(
-      :summary     => data.summary,
-      :description => data.description,
-      :label       => label,
-    )
     # get events
-    client.execute(
+    items = client.execute(
       :api_method => client.discovered_api('calendar', 'v3').events.list,
       :parameters => {
         'calendarId'   => calendar.cid,
@@ -36,7 +31,21 @@ task :crawling => :environment  do
         'timeMin'      => today,
         'timeMax'      => today >> 1,
       },
-    ).data.items.each do |item|
+    ).data.items
+
+    if calendar.source.blank? or items.any?
+      calendar.update(
+        :source      => 'https://www.google.com/calendar/embed?src=' + CGI.escape(calendar.cid),
+      )
+    end
+
+    calendar.update(
+      :summary     => data.summary,
+      :description => data.description,
+      :label       => label,
+    )
+
+    items.each do |item|
       filter = /(?:イベント|ライブ|live|公演|ツアー|出演|開場|開演|open|start|握手|チェキ|サイン)/i
       next unless (item.summary && item.summary.match(filter) || (item.description && item.description.match(filter)))
       start_datetime = item.start.date_time || item.start.date

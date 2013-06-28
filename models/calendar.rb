@@ -20,4 +20,8 @@ class Calendar < Sequel::Model
 
     return cal
   end
+
+  def live_update
+    LiveUpdate.filter(:cid => cid).first
+  end
 end
