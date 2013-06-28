@@ -3,6 +3,10 @@ module Extractors
   class Natokan 
     URL = "http://natokan.syncl.jp/?p=custom&id=18030995"
 
+    def self.source
+      self::URL
+    end
+
     def self.execute
       new(fetch).execute
     end

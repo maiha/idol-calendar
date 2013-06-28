@@ -3,7 +3,7 @@ Sequel.migration do
     create_table :live_updates do
       primary_key :id
       String  :cid, :unique => true
-      String  :extractor
+      String  :extractor_name
     end
   end
 
