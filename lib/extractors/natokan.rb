@@ -49,7 +49,7 @@ module Extractors
         event.description = text
 
         case text
-        when %r{^(\d{1,2})/(\d{1,2})\n*\(.*?\)(.*?)\n}m
+        when %r{^(\d{1,2})/(\d{1,2})(?:・\d+)?\n*\(.*?\)(.*?)\n}m
           year  = Time.now.year
           month = $1.to_i
           day   = $2.to_i
