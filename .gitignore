@@ -3,6 +3,7 @@ log/**/*
 tmp/**/*
 bin/*
 vendor/gems/*
+vendor/ruby/*
 !vendor/gems/cache/
 .sass-cache/*
 .bundle/
@@ -11,3 +12,4 @@ config/database.rb
 config/apps.rb
 db/cals.tsv
 log/
+.rbenv-version
